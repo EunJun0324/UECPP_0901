@@ -68,8 +68,8 @@ void AC_Player::Move(const FInputActionValue& Value)
     const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
     const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-    AddMovementInput(ForwardDirection, MovementVector.Y);
-    AddMovementInput(RightDirection, MovementVector.X);
+    AddMovementInput(ForwardDirection, MovementVector.X);
+    AddMovementInput(RightDirection, MovementVector.Y);
 }
 
 void AC_Player::Look(const FInputActionValue& Value)
