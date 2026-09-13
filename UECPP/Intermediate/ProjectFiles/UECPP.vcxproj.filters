@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\.vsconfig" />
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\UECPP.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\UECPPEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Source\UECPP">
+      <UniqueIdentifier>{7FEDF515-13BF-37F7-A046-4AF3EA47CC6B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UECPP\Private">
+      <UniqueIdentifier>{0AD16B0B-9DB8-3D2C-BA50-E8E1220D2946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UECPP\Private\Actors">
+      <UniqueIdentifier>{47559673-3F1E-3B26-9FA7-BC5A4DA126CB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UECPP\Private\Actors\Characters">
+      <UniqueIdentifier>{C3656DF6-EFA0-3C87-A96E-6775E70833CF}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UECPP\Private\Actors\Characters\C_Player.cpp">
+      <Filter>Source\UECPP\Private\Actors\Characters</Filter>
+    </ClCompile>
+    <Filter Include="Source\UECPP\Private\Game">
+      <UniqueIdentifier>{71D763D4-C9DB-39C1-A166-3D0FD1A9AFF7}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UECPP\Private\Game\C_GameMode.cpp">
+      <Filter>Source\UECPP\Private\Game</Filter>
+    </ClCompile>
+    <Filter Include="Source\UECPP\Public">
+      <UniqueIdentifier>{22E1FCDD-4590-3B6E-83A1-25F10CD0A723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UECPP\Public\Actors">
+      <UniqueIdentifier>{B789F5DB-B422-34F1-852D-8214822CDDA2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UECPP\Public\Actors\Characters">
+      <UniqueIdentifier>{9E94BE09-856C-30A8-BEB9-63DBE755B7A2}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\UECPP\Public\Actors\Characters\C_Player.h">
+      <Filter>Source\UECPP\Public\Actors\Characters</Filter>
+    </ClInclude>
+    <Filter Include="Source\UECPP\Public\Game">
+      <UniqueIdentifier>{E39EDB94-3A16-381B-BEC2-6CA430F87632}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\UECPP\Public\Game\C_GameMode.h">
+      <Filter>Source\UECPP\Public\Game</Filter>
+    </ClInclude>
+    <None Include="..\..\Source\UECPP\UECPP.Build.cs">
+      <Filter>Source\UECPP</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\UECPP\UECPP.cpp">
+      <Filter>Source\UECPP</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UECPP\UECPP.h">
+      <Filter>Source\UECPP</Filter>
+    </ClInclude>
+    <None Include="..\..\UECPP.uproject" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,33 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\user\\desktop\\uecpp_0901\\uecpp\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\uecpp\\module.uecpp.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\user\\desktop\\uecpp_0901\\uecpp\\intermediate\\build\\win64\\x64\\uecppeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\user\\desktop\\uecpp_0901\\uecpp\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\uecpp\\definitions.uecpp.h",
+            "c:\\users\\user\\desktop\\uecpp_0901\\uecpp\\intermediate\\build\\win64\\unrealeditor\\inc\\uecpp\\uht\\c_gamemode.gen.cpp",
+            "c:\\users\\user\\desktop\\uecpp_0901\\uecpp\\source\\uecpp\\public\\game\\c_gamemode.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\serverstatreplicator.generated.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\gamemodebase.generated.h",
+            "c:\\users\\user\\desktop\\uecpp_0901\\uecpp\\intermediate\\build\\win64\\unrealeditor\\inc\\uecpp\\uht\\c_gamemode.generated.h",
+            "c:\\users\\user\\desktop\\uecpp_0901\\uecpp\\intermediate\\build\\win64\\unrealeditor\\inc\\uecpp\\uht\\c_player.gen.cpp",
+            "c:\\users\\user\\desktop\\uecpp_0901\\uecpp\\source\\uecpp\\public\\actors\\characters\\c_player.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\engine\\classes\\gameframework\\character.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\engine\\classes\\gameframework\\charactermovementreplication.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\net\\core\\public\\net\\core\\nettoken\\nettokenexportcontext.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\net\\iris\\public\\iris\\serialization\\irisobjectreferencepackagemap.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\iriscore\\uht\\irisobjectreferencepackagemap.generated.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\charactermovementreplication.generated.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\source\\runtime\\engine\\classes\\gameframework\\rootmotionsource.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\rootmotionsource.generated.h",
+            "c:\\program files\\epic games\\ue_5.7\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\character.generated.h",
+            "c:\\users\\user\\desktop\\uecpp_0901\\uecpp\\intermediate\\build\\win64\\unrealeditor\\inc\\uecpp\\uht\\c_player.generated.h",
+            "c:\\users\\user\\desktop\\uecpp_0901\\uecpp\\intermediate\\build\\win64\\unrealeditor\\inc\\uecpp\\uht\\uecpp.init.gen.cpp"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

@@ -59,7 +59,7 @@ void AC_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 }
 
 void AC_Player::Move(const FInputActionValue& Value)
-{S
+{
     const FVector2D MovementVector = Value.Get<FVector2D>();
 
     const FRotator Rotation = Controller->GetControlRotation();

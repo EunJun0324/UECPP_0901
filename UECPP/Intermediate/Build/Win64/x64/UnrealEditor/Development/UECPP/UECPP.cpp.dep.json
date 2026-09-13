@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\user\\desktop\\uecpp_0901\\uecpp\\source\\uecpp\\uecpp.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\user\\desktop\\uecpp_0901\\uecpp\\intermediate\\build\\win64\\x64\\uecppeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\user\\desktop\\uecpp_0901\\uecpp\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\uecpp\\definitions.uecpp.h",
+            "c:\\users\\user\\desktop\\uecpp_0901\\uecpp\\source\\uecpp\\uecpp.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

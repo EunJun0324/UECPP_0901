@@ -1,0 +1,10 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.UECPP.gen.cpp.obj": [
+			"C_GameMode.gen.cpp.obj",
+			"C_Player.gen.cpp.obj",
+			"UECPP.init.gen.cpp.obj"
+		]
+	}
+}
