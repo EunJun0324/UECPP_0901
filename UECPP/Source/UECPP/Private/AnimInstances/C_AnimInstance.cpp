@@ -28,6 +28,10 @@ void UC_AnimInstance::NativeUpdateAnimation(float deltaSeconds)
 	}
 
 	{
+		Direction = CalculateDirection(OwningCharacter->GetVelocity(), OwningCharacter->GetActorRotation());
+	}
+
+	{
 		// bIsFalling 설정
 		bIsFalling = Movement->IsFalling();
 	}
