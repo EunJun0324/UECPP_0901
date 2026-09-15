@@ -43,4 +43,10 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UInputAction> JumpAction;
+
+private :
+    class AC_PickupItem* NearPickItem;
+
+public:
+    FORCEINLINE void SetPickupItem(AC_PickupItem* item) { NearPickItem = item; }
 };
