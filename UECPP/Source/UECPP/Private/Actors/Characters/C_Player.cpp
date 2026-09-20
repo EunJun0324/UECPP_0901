@@ -4,6 +4,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Components/C_CombatComponent.h"
 
 AC_Player::AC_Player()
 {
@@ -21,6 +22,8 @@ AC_Player::AC_Player()
     bUseControllerRotationYaw = true;
     GetCharacterMovement()->bOrientRotationToMovement = false;
     GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f);
+
+    CombatComponent = CreateDefaultSubobject<UC_CombatComponent>(TEXT("CombatComponent"));
 }
 
 void AC_Player::BeginPlay()
@@ -52,15 +55,16 @@ void AC_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
     if (UEnhancedInputComponent* EnhancedInput = Cast<UEnhancedInputComponent>(PlayerInputComponent))
     {
-        EnhancedInput->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AC_Player::Move);
-        EnhancedInput->BindAction(LookAction, ETriggerEvent::Triggered, this, &AC_Player::Look);
-        EnhancedInput->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AC_Player::Jump);
+        EnhancedInput->BindAction(MoveAction    , ETriggerEvent::Triggered, this, &AC_Player::Move    );
+        EnhancedInput->BindAction(LookAction    , ETriggerEvent::Triggered, this, &AC_Player::Look    );
+        EnhancedInput->BindAction(JumpAction    , ETriggerEvent::Started  , this, &AC_Player::Jump    );
+        EnhancedInput->BindAction(InteractAction, ETriggerEvent::Started  , this, &AC_Player::Interact);
     }
 }
 
-void AC_Player::Move(const FInputActionValue& Value)
+void AC_Player::Move(const FInputActionValue& value)
 {
-    const FVector2D MovementVector = Value.Get<FVector2D>();
+    const FVector2D Movementvector = value.Get<FVector2D>();
 
     const FRotator Rotation = Controller->GetControlRotation();
     const FRotator YawRotation(0, Rotation.Yaw, 0);
@@ -68,20 +72,30 @@ void AC_Player::Move(const FInputActionValue& Value)
     const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
     const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-    AddMovementInput(ForwardDirection, MovementVector.X);
-    AddMovementInput(RightDirection, MovementVector.Y);
+    AddMovementInput(ForwardDirection, Movementvector.X);
+    AddMovementInput(RightDirection, Movementvector.Y);
 }
 
-void AC_Player::Look(const FInputActionValue& Value)
+void AC_Player::Look(const FInputActionValue& value)
 {
-    const FVector2D LookAxisVector = Value.Get<FVector2D>();
+    const FVector2D LookAxisvector = value.Get<FVector2D>();
 
-    AddControllerYawInput(LookAxisVector.X);
-    AddControllerPitchInput(LookAxisVector.Y);
+    AddControllerYawInput(LookAxisvector.X);
+    AddControllerPitchInput(LookAxisvector.Y);
 }
 
-void AC_Player::Jump(const FInputActionValue& Value)
+void AC_Player::Jump(const FInputActionValue& value)
 {
     Super::Jump();
+}
+
+void AC_Player::Interact(const FInputActionValue& value)
+{
+    if (NearPickItem == nullptr) return;
+
+    if (CombatComponent->PickupItem(NearPickItem))
+    {
+        NearPickItem = nullptr;
+    }
 }
 

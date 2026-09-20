@@ -20,9 +20,11 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
     
-    void Move(const struct FInputActionValue& Value);
-    void Look(const struct FInputActionValue& Value);
-    void Jump(const struct FInputActionValue& Value);
+    void Move    (const struct FInputActionValue& value);
+    void Look    (const struct FInputActionValue& value);
+    void Jump    (const struct FInputActionValue& value);
+    void Interact(const struct FInputActionValue& value);
+
     
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
@@ -31,6 +33,10 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UCameraComponent> Camera;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<class UC_CombatComponent> CombatComponent;
+
+protected :
     // 입력 관련
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UInputMappingContext> MappingContext;
@@ -43,6 +49,10 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UInputAction> JumpAction;
+
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<class UInputAction> InteractAction;
 
 private :
     class AC_PickupItem* NearPickItem;
