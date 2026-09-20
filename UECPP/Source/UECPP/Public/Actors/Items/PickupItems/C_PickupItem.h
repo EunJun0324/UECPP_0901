@@ -2,14 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Types/C_Type.h"
 #include "C_PickupItem.generated.h"
-
-UENUM(BlueprintType)
-enum class EItemType : uint8
-{
-	IT_WEAPON,
-	IT_BULLET,
-};
 
 // 언리얼 추상 클래스 선언방법 : UCLASS(Abstract)
 UCLASS(Abstract) // 블루프린트 , 코드에서 직접 인스턴스화를 막습니다.
@@ -25,10 +19,6 @@ protected:
 
 public:	
 	virtual void Tick(float DeltaTime) override;
-
-protected :
-	// 언리얼 순수 가상함수 선언방법 : PURE_VIRTUAL(class::function, )
-	virtual void ApplyEffect(class AC_Player* Picker)PURE_VIRTUAL(AC_PickupItem::ApplyEffect, );
 
 public :
 	UFUNCTION()

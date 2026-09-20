@@ -1,5 +1,6 @@
 ﻿#include "Components/C_CombatComponent.h"
 #include "Actors/Items/PickupItems/Weapons/C_Weapon.h"
+#include "Actors/Characters/C_Player.h"
 
 UC_CombatComponent::UC_CombatComponent()
 {
@@ -24,7 +25,17 @@ void UC_CombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 
 bool UC_CombatComponent::EquipWeapon(AC_Weapon* weapon)
 {
-	return false;
+	if (EquippedWeapon)
+	{
+		EquippedWeapon->UnEquip();
+		EquippedWeapon = nullptr;
+	}
+
+	weapon->Equip(Cast<AC_Player>(GetOwner()));
+
+	EquippedWeapon = weapon;
+
+	return true;
 }
 
 bool UC_CombatComponent::AddBullet(AC_PickupItem* item)
@@ -40,5 +51,13 @@ bool UC_CombatComponent::PickupItem(AC_PickupItem* item)
 	case EItemType::IT_BULLET: return AddBullet(item);
 	}
 	return false;
+}
+
+EWeaponType UC_CombatComponent::GetWeaponType() const
+{
+	if (EquippedWeapon)
+	{ return EquippedWeapon->GetWeaponType(); }
+	else
+	{ return EWeaponType::WT_NONE; }
 }
 

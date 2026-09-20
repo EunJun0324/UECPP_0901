@@ -1,6 +1,7 @@
 ﻿#include "AnimInstances/C_AnimInstance.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Character.h"
+#include "Components/C_CombatComponent.h"
 
 void UC_AnimInstance::NativeInitializeAnimation()
 {
@@ -11,6 +12,7 @@ void UC_AnimInstance::NativeInitializeAnimation()
 	if (OwningCharacter)
 	{
 		Movement = OwningCharacter->GetCharacterMovement();
+		Combat = OwningCharacter->FindComponentByClass<UC_CombatComponent>();
 	}
 }
 
@@ -34,5 +36,12 @@ void UC_AnimInstance::NativeUpdateAnimation(float deltaSeconds)
 	{
 		// bIsFalling 설정
 		bIsFalling = Movement->IsFalling();
+	}
+
+	{
+		if (Combat)
+		{
+			Type = Combat->GetWeaponType();
+		}
 	}
 }

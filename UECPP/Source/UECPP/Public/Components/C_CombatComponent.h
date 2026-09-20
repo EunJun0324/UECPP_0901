@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Types/C_Type.h"
 #include "C_CombatComponent.generated.h"
-
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UECPP_API UC_CombatComponent : public UActorComponent
@@ -30,4 +30,7 @@ public :
 
 private :
 	class AC_Weapon* EquippedWeapon;
+
+public :
+	EWeaponType GetWeaponType() const;
 };

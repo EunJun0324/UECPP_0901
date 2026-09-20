@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "Types/C_Type.h"
 #include "C_AnimInstance.generated.h"
 
 
@@ -33,4 +34,10 @@ protected :
 
 	UPROPERTY(BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	bool bIsFalling;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Type", meta = (AllowPrivateAccess = "true"))
+	EWeaponType Type;
+
+private :
+	class UC_CombatComponent* Combat;
 };
