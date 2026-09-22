@@ -4,10 +4,26 @@
 
 #include "CoreMinimal.h"
 #include "Actors/Items/PickupItems/C_PickupItem.h"
-
 #include "C_Weapon.generated.h"
 
+USTRUCT(BlueprintType)
+struct FWeaponAimData
+{
+	GENERATED_BODY()
 
+public :
+	UPROPERTY(EditDefaultsOnly)
+	float TargetArmLength;
+
+	UPROPERTY(EditDefaultsOnly)
+	FVector SocketOffset;
+
+	UPROPERTY(EditDefaultsOnly)
+	bool bCameraLag;
+
+	UPROPERTY(EditDefaultsOnly)
+	float FieldofView;
+};
 
 
 UCLASS()
@@ -27,6 +43,13 @@ public:
 public :
 	virtual void Equip(class ACharacter* character);
 	virtual void UnEquip();
+	virtual void Aiming(bool bAiming);
+
+protected :
+	UFUNCTION()
+	virtual void OnAiming(float output);
+	
+	virtual void SetAimData(FWeaponAimData aimData);
 
 protected :
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
@@ -37,6 +60,15 @@ protected :
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Socket", meta = (AllowPrivateAccess = "true"))
 	FName SocketName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
+	FWeaponAimData AimData;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
+	FWeaponAimData BaseData;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UTimelineComponent> Timeline;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UCurveFloat> AimCurve;
 
 private :
 	ACharacter* OwnerCharacter;

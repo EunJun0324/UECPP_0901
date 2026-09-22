@@ -27,9 +27,11 @@ private :
 
 public :
 	bool PickupItem(class AC_PickupItem * item);
+	void SetAiming(bool bIsAiming);
 
 private :
 	class AC_Weapon* EquippedWeapon;
+	bool bAiming;
 
 public :
 	EWeaponType GetWeaponType() const;

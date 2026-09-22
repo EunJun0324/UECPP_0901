@@ -55,10 +55,12 @@ void AC_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
     if (UEnhancedInputComponent* EnhancedInput = Cast<UEnhancedInputComponent>(PlayerInputComponent))
     {
-        EnhancedInput->BindAction(MoveAction    , ETriggerEvent::Triggered, this, &AC_Player::Move    );
-        EnhancedInput->BindAction(LookAction    , ETriggerEvent::Triggered, this, &AC_Player::Look    );
-        EnhancedInput->BindAction(JumpAction    , ETriggerEvent::Started  , this, &AC_Player::Jump    );
-        EnhancedInput->BindAction(InteractAction, ETriggerEvent::Started  , this, &AC_Player::Interact);
+        EnhancedInput->BindAction(MoveAction    , ETriggerEvent::Triggered, this, &ThisClass::Move    );
+        EnhancedInput->BindAction(LookAction    , ETriggerEvent::Triggered, this, &ThisClass::Look    );
+        EnhancedInput->BindAction(JumpAction    , ETriggerEvent::Started  , this, &ThisClass::Jump    );
+        EnhancedInput->BindAction(InteractAction, ETriggerEvent::Started  , this, &ThisClass::Interact);
+        EnhancedInput->BindAction(AimAction     , ETriggerEvent::Started  , this, &ThisClass::Aiming  );
+        EnhancedInput->BindAction(AimAction     , ETriggerEvent::Completed, this, &ThisClass::Aiming  );
     }
 }
 
@@ -96,6 +98,18 @@ void AC_Player::Interact(const FInputActionValue& value)
     if (CombatComponent->PickupItem(NearPickItem))
     {
         NearPickItem = nullptr;
+    }
+}
+
+void AC_Player::Aiming(const FInputActionValue& value)
+{
+    bool bAiming = value.Get<bool>();
+
+    CombatComponent->SetAiming(bAiming);
+
+    if (bAiming)
+    {
+
     }
 }
 

@@ -53,6 +53,15 @@ bool UC_CombatComponent::PickupItem(AC_PickupItem* item)
 	return false;
 }
 
+void UC_CombatComponent::SetAiming(bool bIsAiming)
+{
+	if (EquippedWeapon == nullptr) return;
+
+	bAiming = bIsAiming;
+
+	EquippedWeapon->Aiming(bIsAiming);
+}
+
 EWeaponType UC_CombatComponent::GetWeaponType() const
 {
 	if (EquippedWeapon)

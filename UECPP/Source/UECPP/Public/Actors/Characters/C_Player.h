@@ -24,6 +24,8 @@ public:
     void Look    (const struct FInputActionValue& value);
     void Jump    (const struct FInputActionValue& value);
     void Interact(const struct FInputActionValue& value);
+    void Aiming  (const struct FInputActionValue& value);
+
 
     
 protected:
@@ -54,9 +56,16 @@ protected :
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UInputAction> InteractAction;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<class UInputAction> AimAction;
+
 private :
     class AC_PickupItem* NearPickItem;
 
 public:
     FORCEINLINE void SetPickupItem(AC_PickupItem* item) { NearPickItem = item; }
+
+
+    FORCEINLINE USpringArmComponent* GetSpringArm() const { return SpringArm; }
+    FORCEINLINE UCameraComponent*    GetCamera()    const { return    Camera; }
 };
