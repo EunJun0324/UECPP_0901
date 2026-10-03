@@ -44,12 +44,16 @@ public :
 	virtual void Equip(class ACharacter* character);
 	virtual void UnEquip();
 	virtual void Aiming(bool bAiming);
+	virtual void Fire(const FVector& hitTaghet);
 
 protected :
 	UFUNCTION()
 	virtual void OnAiming(float output);
 	
 	virtual void SetAimData(FWeaponAimData aimData);
+
+protected :
+	void SpawnProjectile(const FVector& spawnLocation, const FRotator& direction);
 
 protected :
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
@@ -69,6 +73,8 @@ protected :
 	TObjectPtr<class UTimelineComponent> Timeline;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UCurveFloat> AimCurve;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class AC_Projectile> ProjectileClass;
 
 private :
 	ACharacter* OwnerCharacter;

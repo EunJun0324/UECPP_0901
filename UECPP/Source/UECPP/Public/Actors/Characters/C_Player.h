@@ -25,6 +25,8 @@ public:
     void Jump    (const struct FInputActionValue& value);
     void Interact(const struct FInputActionValue& value);
     void Aiming  (const struct FInputActionValue& value);
+    void Firing  (const struct FInputActionValue& value);
+
 
 
     
@@ -58,6 +60,9 @@ protected :
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UInputAction> AimAction;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<class UInputAction> FireAction;
 
 private :
     class AC_PickupItem* NearPickItem;

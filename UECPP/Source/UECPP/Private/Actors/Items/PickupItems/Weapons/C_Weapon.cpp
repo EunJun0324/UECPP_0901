@@ -5,6 +5,8 @@
 #include "Components/TimelineComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Engine/SkeletalMeshSocket.h"
+#include "Actors/Items/PickupItems/Weapons/C_Projectile.h"
 
 AC_Weapon::AC_Weapon()
 {
@@ -87,6 +89,42 @@ void AC_Weapon::SetAimData(FWeaponAimData aimData)
 	springArm->TargetArmLength = aimData.TargetArmLength;
 	springArm->SocketOffset = aimData.SocketOffset;
 	springArm->bEnableCameraLag = aimData.bCameraLag;
+}
+
+void AC_Weapon::Fire(const FVector& hitTaghet)
+{
+	{
+		const USkeletalMeshSocket* muzzleSocket = Mesh->GetSocketByName(FName("Muzzle"));
+
+		if (muzzleSocket != nullptr)
+		{
+			FTransform transform = muzzleSocket->GetSocketTransform(Mesh);
+			FRotator targetRoation = (hitTaghet - transform.GetLocation()).Rotation();
+
+			SpawnProjectile(transform.GetLocation(), targetRoation);
+		}
+	}
+}
+
+void AC_Weapon::SpawnProjectile(const FVector & spawnLocation, const FRotator & direction)
+{
+	APawn* instigatorPawn = Cast<APawn>(GetOwner());
+
+	if (instigatorPawn == nullptr || ProjectileClass == nullptr) return;
+
+	if (UWorld* world = GetWorld())
+	{
+		FActorSpawnParameters spawnParam;
+		spawnParam.Owner = GetOwner();
+		spawnParam.Instigator = instigatorPawn;
+
+		world->SpawnActor<AC_Projectile>(
+			ProjectileClass,
+			spawnLocation,
+			direction,
+			spawnParam
+		);
+	}
 }
 
 void AC_Weapon::OnAiming(float output)

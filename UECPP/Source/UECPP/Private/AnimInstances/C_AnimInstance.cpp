@@ -2,6 +2,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Character.h"
 #include "Components/C_CombatComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 void UC_AnimInstance::NativeInitializeAnimation()
 {
@@ -42,6 +43,26 @@ void UC_AnimInstance::NativeUpdateAnimation(float deltaSeconds)
 		if (Combat)
 		{
 			Type = Combat->GetWeaponType();
+
+			bEquipped = Type != EWeaponType::WT_NONE;
+
+			if (bEquipped)
+			{
+				if (Speed == 0.0f && !bIsFalling)
+				{
+					FRotator currentAimRotation = FRotator(0.0f, OwningCharacter->GetBaseAimRotation().Yaw, 0.0f);
+					FRotator deltaAimRotation = UKismetMathLibrary::NormalizedDeltaRotator(currentAimRotation, StartingAimRotation);
+					AO_Yaw = deltaAimRotation.Yaw;
+				}
+
+				if (Speed > 0.f || bIsFalling)
+				{
+					StartingAimRotation = FRotator(0.0f, OwningCharacter->GetBaseAimRotation().Yaw, 0.0f);
+					AO_Yaw = 0.f;
+				}
+
+				AO_Pitch = OwningCharacter->GetBaseAimRotation().Pitch;
+			}
 		}
 	}
 }

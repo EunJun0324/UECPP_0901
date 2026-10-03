@@ -31,13 +31,23 @@ protected :
 	UPROPERTY(BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float Direction;
 
-
 	UPROPERTY(BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	bool bIsFalling;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Type", meta = (AllowPrivateAccess = "true"))
 	EWeaponType Type;
 
+	UPROPERTY(BlueprintReadOnly, Category = "Bool", meta = (AllowPrivateAccess = "true"))
+	bool bEquipped;
+
+	UPROPERTY(BlueprintReadOnly, Category = "AimOffset", meta = (AllowPrivateAccess = "true"))
+	float AO_Yaw;
+	
+	UPROPERTY(BlueprintReadOnly, Category = "AimOffset", meta = (AllowPrivateAccess = "true"))
+	float AO_Pitch;
+
 private :
 	class UC_CombatComponent* Combat;
+
+	FRotator StartingAimRotation;
 };

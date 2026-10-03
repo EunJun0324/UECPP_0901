@@ -61,6 +61,8 @@ void AC_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
         EnhancedInput->BindAction(InteractAction, ETriggerEvent::Started  , this, &ThisClass::Interact);
         EnhancedInput->BindAction(AimAction     , ETriggerEvent::Started  , this, &ThisClass::Aiming  );
         EnhancedInput->BindAction(AimAction     , ETriggerEvent::Completed, this, &ThisClass::Aiming  );
+        EnhancedInput->BindAction(FireAction    , ETriggerEvent::Started  , this, &ThisClass::Firing  );
+        EnhancedInput->BindAction(FireAction    , ETriggerEvent::Completed, this, &ThisClass::Firing  );
     }
 }
 
@@ -108,6 +110,18 @@ void AC_Player::Aiming(const FInputActionValue& value)
     CombatComponent->SetAiming(bAiming);
 
     if (bAiming)
+    {
+
+    }
+}
+
+void AC_Player::Firing(const FInputActionValue& value)
+{
+    bool bFiring = value.Get<bool>();
+
+    CombatComponent->Firing(bFiring);
+
+    if (bFiring)
     {
 
     }
