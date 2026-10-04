@@ -106,6 +106,18 @@ void AC_Weapon::Fire(const FVector& hitTaghet)
 	}
 }
 
+void AC_Weapon::Reload(int32& ammo)
+{
+	const int32 needAMMO = MagazineCapacity - AMMO;
+
+	if (needAMMO <= 0 || ammo <= 0) return;
+
+	const int32 loadAMMO = FMath::Min(needAMMO, ammo);
+
+	AMMO += loadAMMO;
+	ammo -= loadAMMO;
+}
+
 void AC_Weapon::SpawnProjectile(const FVector & spawnLocation, const FRotator & direction)
 {
 	APawn* instigatorPawn = Cast<APawn>(GetOwner());

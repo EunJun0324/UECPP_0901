@@ -6,10 +6,10 @@
 UENUM(BlueprintType)
 enum class EWeaponType : uint8
 {
-	WT_NONE,
-	WT_RIFLE,
-	WT_SNIPER,
-	WT_SHOTGUN,
+	WT_NONE    UMETA(DisplayName = "Unarmed"),
+	WT_RIFLE   UMETA(DisplayName = "Rifle")  ,
+	WT_SNIPER  UMETA(DisplayName = "Sniper") ,
+	WT_SHOTGUN UMETA(DisplayName = "Shotgun"),
 };
 
 UENUM(BlueprintType)

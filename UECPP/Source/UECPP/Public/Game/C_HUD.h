@@ -1,4 +1,4 @@
-
+﻿
 
 #pragma once
 
@@ -26,4 +26,7 @@ protected :
 
 	UPROPERTY(EditAnywhere, Category = "CharacterOverlay", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UUserWidget> CharacterOverlayClass;
+
+public :
+	FORCEINLINE UC_CharacterOverlayWidget* GetCharacterOverlay() const { return CharacterOverlay; }
 };

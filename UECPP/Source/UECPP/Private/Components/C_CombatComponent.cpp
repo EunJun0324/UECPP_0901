@@ -2,11 +2,13 @@
 #include "Actors/Items/PickupItems/Weapons/C_Weapon.h"
 #include "Actors/Characters/C_Player.h"
 #include "Kismet/GameplayStatics.h"
+#include "Game/C_HUD.h"
+#include "Widgets/C_CharacterOverlayWidget.h"
 
 UC_CombatComponent::UC_CombatComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
-
+	bAutomatic = false;
 }
 
 
@@ -14,7 +16,24 @@ void UC_CombatComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	bAutomatic = true;
+	CarriedAMMO.Add(EWeaponType::WT_RIFLE  , StartingAMMO);
+	CarriedAMMO.Add(EWeaponType::WT_SNIPER , StartingAMMO);
+	CarriedAMMO.Add(EWeaponType::WT_SHOTGUN, StartingAMMO);
+
+
+	if (APlayerController* controller = UGameplayStatics::GetPlayerController(GetOwner(), 0))
+	{
+		if (AC_HUD* hud = Cast<AC_HUD>(controller->GetHUD()))
+		{
+			CharacterOverlay = hud->GetCharacterOverlay();
+			
+			if (CharacterOverlay)
+			{
+				CharacterOverlay->SetTextWeaponType(UEnum::GetDisplayValueAsText(GetWeaponType()));
+				CharacterOverlay->SetTextAMMO(0, 0);
+			}
+		}
+	}
 }
 
 
@@ -35,6 +54,15 @@ bool UC_CombatComponent::EquipWeapon(AC_Weapon* weapon)
 	weapon->Equip(Cast<AC_Player>(GetOwner()));
 
 	EquippedWeapon = weapon;
+
+	if (CharacterOverlay)
+	{
+		CharacterOverlay->ShowCrosshair(true);
+		CharacterOverlay->SetTextWeaponType(UEnum::GetDisplayValueAsText(GetWeaponType()));
+		CharacterOverlay->SetTextAMMO(EquippedWeapon->GetAMMO(), CarriedAMMO[GetWeaponType()]);
+	}
+
+
 
 	return true;
 }
@@ -97,6 +125,12 @@ void UC_CombatComponent::TraceUnderCrosshair(FHitResult& result)
 
 void UC_CombatComponent::OnFiring()
 {
+	if (EquippedWeapon->GetAMMO() <= 0)
+	{
+		Reload();
+		return;
+	}
+
 	if (!bFiring || EquippedWeapon == nullptr || !bAutomatic) return;
 
 	FHitResult hitReuslt;
@@ -149,6 +183,29 @@ void UC_CombatComponent::Firing(bool bIsFiring)
 	{
 		GetOwner()->GetWorldTimerManager().ClearTimer(FireTimer);
 	}
+}
+
+void UC_CombatComponent::Reload()
+{
+	if (EquippedWeapon == nullptr) return;
+
+	EquippedWeapon->Reload(CarriedAMMO[GetWeaponType()]);
+
+	if (CharacterOverlay)
+	{
+		CharacterOverlay->SetTextAMMO(EquippedWeapon->GetAMMO(), CarriedAMMO[GetWeaponType()]);
+	}
+}
+
+void UC_CombatComponent::ToggleAutomatic()
+{
+	bAutomatic = !bAutomatic;
+
+	if (CharacterOverlay)
+	{
+		CharacterOverlay->SetTextAutomatic(bAutomatic);
+	}
+
 }
 
 EWeaponType UC_CombatComponent::GetWeaponType() const

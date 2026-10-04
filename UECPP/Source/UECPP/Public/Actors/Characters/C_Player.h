@@ -20,15 +20,18 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
     
-    void Move    (const struct FInputActionValue& value);
-    void Look    (const struct FInputActionValue& value);
-    void Jump    (const struct FInputActionValue& value);
-    void Interact(const struct FInputActionValue& value);
-    void Aiming  (const struct FInputActionValue& value);
-    void Firing  (const struct FInputActionValue& value);
+    void Move     (const struct FInputActionValue& value);
+    void Look     (const struct FInputActionValue& value);
+    void Jump     (const struct FInputActionValue& value);
+    void Interact (const struct FInputActionValue& value);
+    void Aiming   (const struct FInputActionValue& value);
+    void Firing   (const struct FInputActionValue& value);
+    void Automatic(const struct FInputActionValue& value);
+    void Run      (const struct FInputActionValue& value);
 
-
-
+private :
+    void SetRunSpeed();
+    void SetWalkSpeed();
     
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
@@ -54,7 +57,6 @@ protected :
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UInputAction> JumpAction;
 
-
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UInputAction> InteractAction;
 
@@ -63,6 +65,12 @@ protected :
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UInputAction> FireAction;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<class UInputAction> RunAction;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<class UInputAction> AutomaticAction;
 
 private :
     class AC_PickupItem* NearPickItem;

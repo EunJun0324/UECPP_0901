@@ -45,6 +45,7 @@ public :
 	virtual void UnEquip();
 	virtual void Aiming(bool bAiming);
 	virtual void Fire(const FVector& hitTaghet);
+	virtual void Reload(int32& carriedAmmo);
 
 protected :
 	UFUNCTION()
@@ -75,10 +76,14 @@ protected :
 	TObjectPtr<class UCurveFloat> AimCurve;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class AC_Projectile> ProjectileClass;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
+	int32 MagazineCapacity;
 
 private :
 	ACharacter* OwnerCharacter;
+	int32 AMMO;
 
 public :
 	FORCEINLINE EWeaponType GetWeaponType() const { return WeaponTpye; }
+	FORCEINLINE const int32& GetAMMO() const { return AMMO; }
 };

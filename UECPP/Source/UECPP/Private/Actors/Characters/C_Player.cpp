@@ -41,12 +41,13 @@ void AC_Player::BeginPlay()
             }
         }
     }
+
+    SetWalkSpeed();
 }
 
 void AC_Player::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AC_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -55,14 +56,17 @@ void AC_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
     if (UEnhancedInputComponent* EnhancedInput = Cast<UEnhancedInputComponent>(PlayerInputComponent))
     {
-        EnhancedInput->BindAction(MoveAction    , ETriggerEvent::Triggered, this, &ThisClass::Move    );
-        EnhancedInput->BindAction(LookAction    , ETriggerEvent::Triggered, this, &ThisClass::Look    );
-        EnhancedInput->BindAction(JumpAction    , ETriggerEvent::Started  , this, &ThisClass::Jump    );
-        EnhancedInput->BindAction(InteractAction, ETriggerEvent::Started  , this, &ThisClass::Interact);
-        EnhancedInput->BindAction(AimAction     , ETriggerEvent::Started  , this, &ThisClass::Aiming  );
-        EnhancedInput->BindAction(AimAction     , ETriggerEvent::Completed, this, &ThisClass::Aiming  );
-        EnhancedInput->BindAction(FireAction    , ETriggerEvent::Started  , this, &ThisClass::Firing  );
-        EnhancedInput->BindAction(FireAction    , ETriggerEvent::Completed, this, &ThisClass::Firing  );
+        EnhancedInput->BindAction(MoveAction     , ETriggerEvent::Triggered, this, &ThisClass::Move     );
+        EnhancedInput->BindAction(LookAction     , ETriggerEvent::Triggered, this, &ThisClass::Look     );
+        EnhancedInput->BindAction(JumpAction     , ETriggerEvent::Started  , this, &ThisClass::Jump     );
+        EnhancedInput->BindAction(InteractAction , ETriggerEvent::Started  , this, &ThisClass::Interact );
+        EnhancedInput->BindAction(AimAction      , ETriggerEvent::Started  , this, &ThisClass::Aiming   );
+        EnhancedInput->BindAction(AimAction      , ETriggerEvent::Completed, this, &ThisClass::Aiming   );
+        EnhancedInput->BindAction(FireAction     , ETriggerEvent::Started  , this, &ThisClass::Firing   );
+        EnhancedInput->BindAction(FireAction     , ETriggerEvent::Completed, this, &ThisClass::Firing   );
+        EnhancedInput->BindAction(RunAction      , ETriggerEvent::Started  , this, &ThisClass::Run      );
+        EnhancedInput->BindAction(RunAction      , ETriggerEvent::Completed, this, &ThisClass::Run      );
+        EnhancedInput->BindAction(AutomaticAction, ETriggerEvent::Started  , this, &ThisClass::Automatic);
     }
 }
 
@@ -111,7 +115,7 @@ void AC_Player::Aiming(const FInputActionValue& value)
 
     if (bAiming)
     {
-
+        SetWalkSpeed();
     }
 }
 
@@ -123,7 +127,30 @@ void AC_Player::Firing(const FInputActionValue& value)
 
     if (bFiring)
     {
-
+        SetWalkSpeed();
     }
+}
+
+void AC_Player::Automatic(const FInputActionValue& value)
+{
+    CombatComponent->ToggleAutomatic();
+}
+
+void AC_Player::Run(const FInputActionValue& value)
+{
+    bool bAutomaic = value.Get<bool>();
+
+    if (bAutomaic) { SetRunSpeed(); }
+    else           { SetWalkSpeed(); }
+}
+
+void AC_Player::SetRunSpeed()
+{
+    GetCharacterMovement()->MaxWalkSpeed = 600;
+}
+
+void AC_Player::SetWalkSpeed()
+{
+    GetCharacterMovement()->MaxWalkSpeed = 400;
 }
 
