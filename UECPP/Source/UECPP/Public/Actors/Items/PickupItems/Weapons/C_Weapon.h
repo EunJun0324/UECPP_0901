@@ -84,6 +84,7 @@ private :
 	int32 AMMO;
 
 public :
-	FORCEINLINE EWeaponType GetWeaponType() const { return WeaponTpye; }
-	FORCEINLINE const int32& GetAMMO() const { return AMMO; }
+	FORCEINLINE EWeaponType  GetWeaponType() const { return WeaponTpye; }
+	FORCEINLINE const int32& GetAMMO()       const { return       AMMO; }
+	FORCEINLINE bool         IsAMMOEmpty()   const { return  AMMO <= 0; }
 };

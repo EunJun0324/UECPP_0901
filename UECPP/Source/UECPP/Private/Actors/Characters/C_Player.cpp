@@ -67,6 +67,7 @@ void AC_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
         EnhancedInput->BindAction(RunAction      , ETriggerEvent::Started  , this, &ThisClass::Run      );
         EnhancedInput->BindAction(RunAction      , ETriggerEvent::Completed, this, &ThisClass::Run      );
         EnhancedInput->BindAction(AutomaticAction, ETriggerEvent::Started  , this, &ThisClass::Automatic);
+        EnhancedInput->BindAction(ReloadAction   , ETriggerEvent::Started  , this, &ThisClass::Reload   );
     }
 }
 
@@ -142,6 +143,11 @@ void AC_Player::Run(const FInputActionValue& value)
 
     if (bAutomaic) { SetRunSpeed(); }
     else           { SetWalkSpeed(); }
+}
+
+void AC_Player::Reload(const FInputActionValue& value)
+{
+    CombatComponent->Reload();
 }
 
 void AC_Player::SetRunSpeed()

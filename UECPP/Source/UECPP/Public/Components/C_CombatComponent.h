@@ -28,8 +28,10 @@ private :
 	bool AddBullet(class AC_PickupItem* item);
 	void TraceUnderCrosshair(FHitResult& result);
 
-	UFUNCTION()
 	void OnFiring();
+
+	UFUNCTION()
+	void FiringTimerFunction();
 
 public :
 	bool PickupItem(class AC_PickupItem * item);

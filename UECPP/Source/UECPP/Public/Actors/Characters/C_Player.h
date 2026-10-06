@@ -28,6 +28,7 @@ public:
     void Firing   (const struct FInputActionValue& value);
     void Automatic(const struct FInputActionValue& value);
     void Run      (const struct FInputActionValue& value);
+    void Reload   (const struct FInputActionValue& value);
 
 private :
     void SetRunSpeed();
@@ -44,7 +45,6 @@ protected:
     TObjectPtr<class UC_CombatComponent> CombatComponent;
 
 protected :
-    // 입력 관련
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UInputMappingContext> MappingContext;
 
@@ -71,6 +71,10 @@ protected :
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UInputAction> AutomaticAction;
+
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<class UInputAction> ReloadAction;
 
 private :
     class AC_PickupItem* NearPickItem;

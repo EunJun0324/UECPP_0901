@@ -125,17 +125,37 @@ void UC_CombatComponent::TraceUnderCrosshair(FHitResult& result)
 
 void UC_CombatComponent::OnFiring()
 {
-	if (EquippedWeapon->GetAMMO() <= 0)
-	{
-		Reload();
-		return;
-	}
-
-	if (!bFiring || EquippedWeapon == nullptr || !bAutomatic) return;
+	if (EquippedWeapon->IsAMMOEmpty()) return;
 
 	FHitResult hitReuslt;
 	TraceUnderCrosshair(hitReuslt);
 	EquippedWeapon->Fire(hitReuslt.ImpactPoint);
+
+	CharacterOverlay->SetTextAMMO(EquippedWeapon->GetAMMO(), CarriedAMMO[GetWeaponType()]);
+	
+	GetOwner()->GetWorldTimerManager().SetTimer
+	(
+		FireTimer,
+		this,
+		&ThisClass::FiringTimerFunction,
+		0.15f
+	);
+}
+
+void UC_CombatComponent::FiringTimerFunction()
+{
+	if (EquippedWeapon == nullptr) return;
+
+
+	if (bAutomatic && bFiring)
+	{
+		OnFiring();
+	}
+
+	if (EquippedWeapon->IsAMMOEmpty())
+	{
+		Reload();
+	}
 }
 
 bool UC_CombatComponent::PickupItem(AC_PickupItem* item)
@@ -165,23 +185,7 @@ void UC_CombatComponent::Firing(bool bIsFiring)
 	
 	if (bFiring)
 	{
-		FHitResult hitReuslt;
-		TraceUnderCrosshair(hitReuslt);
-		EquippedWeapon->Fire(hitReuslt.ImpactPoint);
-		FTimerManagerTimerParameters param;
-		param.bLoop = true;
-		GetOwner()->GetWorldTimerManager().SetTimer
-		(
-			FireTimer,
-			this,
-			&ThisClass::OnFiring,
-			0.15f,
-			param
-		);
-	}
-	else
-	{
-		GetOwner()->GetWorldTimerManager().ClearTimer(FireTimer);
+		OnFiring();
 	}
 }
 

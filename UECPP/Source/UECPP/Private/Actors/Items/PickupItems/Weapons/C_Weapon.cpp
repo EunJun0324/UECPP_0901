@@ -94,8 +94,10 @@ void AC_Weapon::SetAimData(FWeaponAimData aimData)
 void AC_Weapon::Fire(const FVector& hitTaghet)
 {
 	{
-		const USkeletalMeshSocket* muzzleSocket = Mesh->GetSocketByName(FName("Muzzle"));
+		if (AMMO <= 0) return;
 
+		const USkeletalMeshSocket* muzzleSocket = Mesh->GetSocketByName(FName("Muzzle"));
+		
 		if (muzzleSocket != nullptr)
 		{
 			FTransform transform = muzzleSocket->GetSocketTransform(Mesh);
@@ -103,6 +105,8 @@ void AC_Weapon::Fire(const FVector& hitTaghet)
 
 			SpawnProjectile(transform.GetLocation(), targetRoation);
 		}
+
+		AMMO--;
 	}
 }
 
