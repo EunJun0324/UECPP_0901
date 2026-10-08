@@ -25,7 +25,7 @@ public:
 
 private :
 	bool EquipWeapon(class AC_Weapon* weapon);
-	bool AddBullet(class AC_PickupItem* item);
+	bool AddBullet(class AC_Bullet* bullet);
 	void TraceUnderCrosshair(FHitResult& result);
 
 	void OnFiring();

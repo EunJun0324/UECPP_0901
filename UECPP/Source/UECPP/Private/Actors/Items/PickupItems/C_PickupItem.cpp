@@ -13,6 +13,9 @@ AC_PickupItem::AC_PickupItem()
 	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("WidgetComponent"));
 	WidgetComponent->SetupAttachment(RootComponent);
 	WidgetComponent->SetVisibility(false);
+	WidgetComponent->SetDrawSize(FVector2D(300.f, 50.f));
+	WidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
+	WidgetComponent->SetRelativeLocation(FVector(0.f, 0.f, 25.f));
 }
 
 void AC_PickupItem::BeginPlay()
@@ -20,7 +23,7 @@ void AC_PickupItem::BeginPlay()
 	Super::BeginPlay();
 	
 	Collision->OnComponentBeginOverlap.AddDynamic(this, &AC_PickupItem::OnCollsionBeginOverlap);
-	Collision->OnComponentEndOverlap.AddDynamic(this, &AC_PickupItem::OnCollsionEndOverlap);\
+	Collision->OnComponentEndOverlap.AddDynamic(this, &AC_PickupItem::OnCollsionEndOverlap);
 	WidgetComponent->SetVisibility(false);
 }
 

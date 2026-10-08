@@ -7,6 +7,9 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Engine/SkeletalMeshSocket.h"
 #include "Actors/Items/PickupItems/Weapons/C_Projectile.h"
+#include "GameFramework/PlayerController.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "Shakes/LegacyCameraShake.h"
 
 AC_Weapon::AC_Weapon()
 {
@@ -96,14 +99,22 @@ void AC_Weapon::Fire(const FVector& hitTaghet)
 	{
 		if (AMMO <= 0) return;
 
-		const USkeletalMeshSocket* muzzleSocket = Mesh->GetSocketByName(FName("Muzzle"));
-		
-		if (muzzleSocket != nullptr)
-		{
-			FTransform transform = muzzleSocket->GetSocketTransform(Mesh);
-			FRotator targetRoation = (hitTaghet - transform.GetLocation()).Rotation();
+		Mesh->PlayAnimation(WeaponFireAnimation, false);
 
-			SpawnProjectile(transform.GetLocation(), targetRoation);
+
+		if (AC_Player* player = Cast<AC_Player>(GetOwner()))
+		{
+			if (CameraShakeClass != nullptr)
+			{
+				APlayerController* controller = player->GetController<APlayerController>();
+
+				if (controller != nullptr)
+				{
+					controller->PlayerCameraManager->StartCameraShake(CameraShakeClass);
+				}
+			}
+
+			player->AddControllerPitchInput(-RecoliRate * UKismetMathLibrary::RandomFloatInRange(0.8f, 1.2f));
 		}
 
 		AMMO--;
@@ -115,6 +126,8 @@ void AC_Weapon::Reload(int32& ammo)
 	const int32 needAMMO = MagazineCapacity - AMMO;
 
 	if (needAMMO <= 0 || ammo <= 0) return;
+
+	Mesh->PlayAnimation(WeaponReloadAnimation, false);
 
 	const int32 loadAMMO = FMath::Min(needAMMO, ammo);
 

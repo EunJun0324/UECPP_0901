@@ -6,6 +6,11 @@
 #include "Actors/Items/PickupItems/C_PickupItem.h"
 #include "C_Weapon.generated.h"
 
+// Shotgun 을 만들어주세요.
+// Shotgun 은 발파시에 산탄처럼 퍼져나가야합니다.
+
+// Rifle 은 따로 클래스를 설정해주세요.
+
 USTRUCT(BlueprintType)
 struct FWeaponAimData
 {
@@ -68,16 +73,34 @@ protected :
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
 	FWeaponAimData AimData;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
 	FWeaponAimData BaseData;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UTimelineComponent> Timeline;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UCurveFloat> AimCurve;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class AC_Projectile> ProjectileClass;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
 	int32 MagazineCapacity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UAnimationAsset> WeaponFireAnimation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UAnimationAsset> WeaponReloadAnimation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class ULegacyCameraShake> CameraShakeClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
+	float RecoliRate;
+
 
 private :
 	ACharacter* OwnerCharacter;

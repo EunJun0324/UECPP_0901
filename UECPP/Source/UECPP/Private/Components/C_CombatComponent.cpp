@@ -4,6 +4,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Game/C_HUD.h"
 #include "Widgets/C_CharacterOverlayWidget.h"
+#include "Actors/Items/PickupItems/C_Bullet.h"
 
 UC_CombatComponent::UC_CombatComponent()
 {
@@ -19,6 +20,8 @@ void UC_CombatComponent::BeginPlay()
 	CarriedAMMO.Add(EWeaponType::WT_RIFLE  , StartingAMMO);
 	CarriedAMMO.Add(EWeaponType::WT_SNIPER , StartingAMMO);
 	CarriedAMMO.Add(EWeaponType::WT_SHOTGUN, StartingAMMO);
+	CarriedAMMO.Add(EWeaponType::WT_NONE   , 0);
+
 
 
 	if (APlayerController* controller = UGameplayStatics::GetPlayerController(GetOwner(), 0))
@@ -67,9 +70,24 @@ bool UC_CombatComponent::EquipWeapon(AC_Weapon* weapon)
 	return true;
 }
 
-bool UC_CombatComponent::AddBullet(AC_PickupItem* item)
+bool UC_CombatComponent::AddBullet(AC_Bullet* bullet)
 {
-	return false;
+	if (bullet == nullptr) return false;
+
+	CarriedAMMO[bullet->GetBulletType()] += bullet->GetAMMO();
+
+	if (EquippedWeapon != nullptr)
+	{
+		CharacterOverlay->SetTextAMMO(EquippedWeapon->GetAMMO(), CarriedAMMO[GetWeaponType()]);
+	}
+	else
+	{
+		CharacterOverlay->SetTextAMMO(0, CarriedAMMO[bullet->GetBulletType()]);
+	}
+
+	bullet->Destroy();
+
+	return true;
 }
 
 void UC_CombatComponent::TraceUnderCrosshair(FHitResult& result)
@@ -163,7 +181,7 @@ bool UC_CombatComponent::PickupItem(AC_PickupItem* item)
 	switch (item->GetItemType())
 	{
 	case EItemType::IT_WEAPON: return EquipWeapon(Cast<AC_Weapon>(item));
-	case EItemType::IT_BULLET: return AddBullet(item);
+	case EItemType::IT_BULLET: return AddBullet(Cast<AC_Bullet>(item));
 	}
 	return false;
 }
