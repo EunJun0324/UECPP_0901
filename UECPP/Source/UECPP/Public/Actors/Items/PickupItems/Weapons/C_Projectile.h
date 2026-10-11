@@ -1,4 +1,4 @@
-
+﻿
 
 #pragma once
 
@@ -24,7 +24,7 @@ protected :
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<class USphereComponent> Collision;
 	
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly,  BlueprintReadWrite)
 	TObjectPtr<class UStaticMeshComponent> Mesh;
 	
 	UPROPERTY(EditDefaultsOnly)
