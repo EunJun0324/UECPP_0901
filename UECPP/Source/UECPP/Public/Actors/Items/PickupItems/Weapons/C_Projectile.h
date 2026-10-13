@@ -20,6 +20,10 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 
+private :
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
 protected :
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<class USphereComponent> Collision;
@@ -28,7 +32,7 @@ protected :
 	TObjectPtr<class UStaticMeshComponent> Mesh;
 	
 	UPROPERTY(EditDefaultsOnly)
-	TObjectPtr<class UParticleSystem> ImpactParticle;
+	TObjectPtr<class UNiagaraSystem> ImpactParticle;
 	
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<class USoundCue> ImpactSound;

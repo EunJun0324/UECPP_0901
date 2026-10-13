@@ -3,8 +3,8 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/Pawn.h"
-
 
 AC_AIController::AC_AIController()
 {
@@ -28,6 +28,8 @@ AC_AIController::AC_AIController()
 void AC_AIController::BeginPlay()
 {
 	Super::BeginPlay();
+
+
 }
 
 void AC_AIController::OnPossess(APawn* inPawn)
@@ -40,11 +42,9 @@ void AC_AIController::OnPossess(APawn* inPawn)
 	{
 		RunBehaviorTree(BehaivorTreeAsset);
 
-		UBlackboardComponent* bb = GetBlackboardComponent();
-
-		if (bb == nullptr) return;
-
-		bb->SetValueAsVector(TEXT("StartLocation"), inPawn->GetActorLocation());
+		StartLocation = inPawn->GetActorLocation();
+		StartRotation = inPawn->GetActorRotation();
+		IdleYaw = StartRotation.Yaw;
 	}
 }
 
@@ -55,12 +55,41 @@ void AC_AIController::Tick(float deltaSeconds)
 	if (bb != nullptr)
 	{
 		AActor* actor = Cast<AActor>(bb->GetValueAsObject(TargetKeyName));
+		FVector actorLoc = GetPawn()->GetActorLocation();
 
-		if (actor != nullptr)
+		const float distFromStart = FVector::Dist2D(actorLoc, StartLocation);
+
+		if (actor != nullptr && distFromStart < LeashDinstance)
 		{
-			float distance = FVector::DistXY(GetPawn()->GetActorLocation(), actor->GetActorLocation());
+			FVector targetLoc = actor->GetActorLocation();
+			float distance = FVector::Dist2D(actorLoc, targetLoc);
 
 			bb->SetValueAsBool(TEXT("IsInRange"), distance < FireRange);
+
+			FRotator lookRot = UKismetMathLibrary::FindLookAtRotation(actorLoc, targetLoc);
+
+			SmoothRotateToYaw(lookRot.Yaw, deltaSeconds);
+
+		}
+		else
+		{
+			if (distFromStart > 100)
+			{
+				EPathFollowingRequestResult::Type result  = MoveToLocation(StartLocation, 80);
+				FRotator lookRot = UKismetMathLibrary::FindLookAtRotation(actorLoc, StartLocation);
+				SmoothRotateToYaw(lookRot.Yaw, deltaSeconds);
+			}
+			else
+			{
+				TurnTimer += deltaSeconds;
+
+				if (TurnTimer >= TurnInterval)
+				{
+					TurnTimer = 0;
+					IdleYaw = FRotator::NormalizeAxis(IdleYaw + 90.f);
+				}
+				SmoothRotateToYaw(IdleYaw, deltaSeconds);
+			}
 		}
 	}
 }
@@ -78,11 +107,19 @@ void AC_AIController::OnTargetPerceptionUpdated(AActor* actor, FAIStimulus stimu
 	if (stimuls.WasSuccessfullySensed())
 	{
 		bb->SetValueAsObject(TargetKeyName, actor);
-		SetFocus(actor);
 	}
 	else
 	{
 		bb->ClearValue(TargetKeyName);
-		ClearFocus(EAIFocusPriority::Gameplay);
+		TurnTimer = 0;
 	}
+}
+
+void AC_AIController::SmoothRotateToYaw(float tagetYaw, float deltaTime)
+{
+	FRotator newRot = FMath::RInterpTo(GetPawn()->GetActorRotation(), FRotator(0.f, tagetYaw, 0.f), deltaTime, RotationSpeed);
+
+	GetPawn()->SetActorRotation(newRot);
+
+	SetControlRotation(newRot);
 }

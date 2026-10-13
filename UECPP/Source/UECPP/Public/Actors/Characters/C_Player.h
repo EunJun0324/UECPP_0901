@@ -14,6 +14,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+    virtual float TakeDamage(float damage, FDamageEvent const& event, AController* instigator, AActor* causer) override;
 
 public:	
 	virtual void Tick(float DeltaTime) override;
@@ -41,8 +42,12 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UCameraComponent> Camera;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UC_CombatComponent> CombatComponent;
+
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+    float MaxHealth;
 
 protected :
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
@@ -78,7 +83,7 @@ protected :
 
 private :
     class AC_PickupItem* NearPickItem;
-
+    float Health;
 public:
     FORCEINLINE void SetPickupItem(AC_PickupItem* item) { NearPickItem = item; }
 

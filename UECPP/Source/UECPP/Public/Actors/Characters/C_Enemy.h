@@ -11,6 +11,10 @@ class UECPP_API AC_Enemy : public ACharacter
 {
 	GENERATED_BODY()
 
+	// WidgetComponent
+	// EnemyWidget
+	// TakeDamage 를 이용해서 Hp 가 줄어들도록 만들어주시고, Hp 가 0 이 된다면 해당 액터를 삭제해주세요. 
+
 public:
 	AC_Enemy();
 

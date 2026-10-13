@@ -5,6 +5,8 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Materials/MaterialInstanceConstant.h"
 #include "Kismet/GameplayStatics.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraSystem.h"
 
 AC_Projectile::AC_Projectile()
 {
@@ -32,6 +34,8 @@ AC_Projectile::AC_Projectile()
 void AC_Projectile::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Collision->OnComponentHit.AddDynamic(this, &ThisClass::OnHit);
 	
 	SetLifeSpan(3);
 }
@@ -40,5 +44,23 @@ void AC_Projectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AC_Projectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	UGameplayStatics::ApplyDamage(OtherActor, Damage, GetInstigatorController(), this, UDamageType::StaticClass());
+
+	if (ImpactParticle)
+	{
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation
+		(
+			GetWorld(),
+			ImpactParticle,
+			Hit.ImpactPoint,
+			Hit.ImpactNormal.Rotation()
+		);
+	}
+
+	Destroy();
 }
 

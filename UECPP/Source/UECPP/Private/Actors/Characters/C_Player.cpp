@@ -5,11 +5,12 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Components/C_CombatComponent.h"
+#include "Widgets/C_CharacterOverlayWidget.h"
 
 AC_Player::AC_Player()
 {
 	PrimaryActorTick.bCanEverTick = true;
-    
+
     SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
     SpringArm->SetupAttachment(RootComponent);
     SpringArm->TargetArmLength = 400.0f;
@@ -42,7 +43,27 @@ void AC_Player::BeginPlay()
         }
     }
 
+    Health = MaxHealth;
+
+    CombatComponent->GetCharacterOverlay()->SetProgressBarHealth(Health, MaxHealth);
+
     SetWalkSpeed();
+}
+
+float AC_Player::TakeDamage(float damage, FDamageEvent const& event, AController* instigator, AActor* causer)
+{
+    float applydamage = Super::TakeDamage(damage, event, instigator, causer);
+
+    Health = FMath::Clamp(Health - applydamage, 0.f, MaxHealth);
+
+    if (Health <= 0.f)
+    {
+        // Die;
+    }
+
+    CombatComponent->GetCharacterOverlay()->SetProgressBarHealth(Health, MaxHealth);
+
+    return applydamage;
 }
 
 void AC_Player::Tick(float DeltaTime)

@@ -21,6 +21,8 @@ protected:
 	UFUNCTION()
 	void OnTargetPerceptionUpdated(AActor* actor, struct FAIStimulus stimuls);
 
+	void SmoothRotateToYaw(float tagetYaw, float deltaTime);
+
 private :
 	UPROPERTY()
 	TObjectPtr<class UAISenseConfig_Sight> SightConfig;
@@ -32,7 +34,16 @@ private :
 	FName TargetKeyName = TEXT("TargetActor");
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	float RotationSpeed = 5.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	float TurnInterval = 3.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	float FireRange = 1000.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	float LeashDinstance = 2500.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category ="Sight", meta = (AllowPrivateAccess = "true"))
 	float SightRadius = 1500.f;
@@ -46,5 +57,9 @@ private :
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sight", meta = (AllowPrivateAccess = "true"))
 	float MaxAge = 3.f;
 
-
+private :
+	float TurnTimer = 0.f;
+	float IdleYaw   = 0.f;
+	FVector  StartLocation;
+	FRotator StartRotation;
 };
