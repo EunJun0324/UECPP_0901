@@ -117,6 +117,8 @@ void AC_Weapon::Fire(const FVector& hitTaghet)
 			player->AddControllerPitchInput(-RecoliRate * UKismetMathLibrary::RandomFloatInRange(0.8f, 1.2f));
 		}
 
+		OwnerCharacter->PlayAnimMontage(FireMontage);
+
 		AMMO--;
 	}
 }
@@ -128,6 +130,8 @@ void AC_Weapon::Reload(int32& ammo)
 	if (needAMMO <= 0 || ammo <= 0) return;
 
 	Mesh->PlayAnimation(WeaponReloadAnimation, false);
+
+	OwnerCharacter->PlayAnimMontage(ReloadMontage);
 
 	const int32 loadAMMO = FMath::Min(needAMMO, ammo);
 

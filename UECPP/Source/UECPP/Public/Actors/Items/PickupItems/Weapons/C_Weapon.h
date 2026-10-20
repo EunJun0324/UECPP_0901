@@ -101,6 +101,11 @@ protected :
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
 	float RecoliRate;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UAnimMontage> FireMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UAnimMontage> ReloadMontage;
 
 private :
 	ACharacter* OwnerCharacter;

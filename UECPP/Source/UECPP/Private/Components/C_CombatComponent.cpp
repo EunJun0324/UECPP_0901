@@ -212,7 +212,10 @@ void UC_CombatComponent::Reload()
 	if (EquippedWeapon == nullptr) return;
 
 	EquippedWeapon->Reload(CarriedAMMO[GetWeaponType()]);
+}
 
+void UC_CombatComponent::ReloadUpateHUD()
+{
 	if (CharacterOverlay)
 	{
 		CharacterOverlay->SetTextAMMO(EquippedWeapon->GetAMMO(), CarriedAMMO[GetWeaponType()]);

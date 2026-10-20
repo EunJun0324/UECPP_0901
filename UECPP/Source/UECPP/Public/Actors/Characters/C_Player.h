@@ -88,6 +88,8 @@ public:
     FORCEINLINE void SetPickupItem(AC_PickupItem* item) { NearPickItem = item; }
 
 
-    FORCEINLINE USpringArmComponent* GetSpringArm() const { return SpringArm; }
-    FORCEINLINE UCameraComponent*    GetCamera()    const { return    Camera; }
+    FORCEINLINE USpringArmComponent* GetSpringArm()          const { return          SpringArm; }
+    FORCEINLINE UCameraComponent*    GetCamera()             const { return             Camera; }
+    FORCEINLINE UC_CombatComponent*  GetCombatComponent()    const { return    CombatComponent; }
+
 };

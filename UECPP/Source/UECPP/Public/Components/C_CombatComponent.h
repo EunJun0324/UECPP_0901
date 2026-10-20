@@ -38,6 +38,7 @@ public :
 	void SetAiming(bool bIsAiming);
 	void Firing(bool bIsFiring);
 	void Reload();
+	void ReloadUpateHUD();
 
 public :
 	void ToggleAutomatic();
