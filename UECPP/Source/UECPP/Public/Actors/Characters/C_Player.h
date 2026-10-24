@@ -84,6 +84,7 @@ protected :
 private :
     class AC_PickupItem* NearPickItem;
     float Health;
+
 public:
     FORCEINLINE void SetPickupItem(AC_PickupItem* item) { NearPickItem = item; }
 

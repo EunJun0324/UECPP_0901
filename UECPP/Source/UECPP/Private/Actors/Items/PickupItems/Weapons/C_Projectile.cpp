@@ -6,6 +6,8 @@
 #include "Materials/MaterialInstanceConstant.h"
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Components/DecalComponent.h"
+#include "GameFramework/Character.h"
 #include "NiagaraSystem.h"
 
 AC_Projectile::AC_Projectile()
@@ -50,15 +52,23 @@ void AC_Projectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 {
 	UGameplayStatics::ApplyDamage(OtherActor, Damage, GetInstigatorController(), this, UDamageType::StaticClass());
 
-	if (ImpactParticle)
+	if (Cast<ACharacter>(OtherActor))
 	{
-		UNiagaraFunctionLibrary::SpawnSystemAtLocation
-		(
-			GetWorld(),
-			ImpactParticle,
-			Hit.ImpactPoint,
-			Hit.ImpactNormal.Rotation()
-		);
+		if (ImpactParticle)
+		{
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation
+			(
+				GetWorld(),
+				ImpactParticle,
+				Hit.ImpactPoint,
+				Hit.ImpactNormal.Rotation()
+			);
+		}
+	}
+	else
+	{
+		UDecalComponent* decal = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), HitDecal, FVector(DecalSize), Hit.Location, Hit.ImpactNormal.Rotation(), 10);
+		decal->SetFadeScreenSize(0);
 	}
 
 	Destroy();

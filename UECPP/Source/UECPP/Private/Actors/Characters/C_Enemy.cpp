@@ -2,6 +2,11 @@
 #include "Actors/Items/PickupItems/Weapons/C_Projectile.h"
 #include "Components/WidgetComponent.h"
 #include "Widgets/C_EnemyWidget.h"
+#include "Materials/MaterialInstanceConstant.h"
+#include "Materials/MaterialInstanceDynamic.h"
+#include "Components/TimelineComponent.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "Curves/CurveFloat.h"
 
 AC_Enemy::AC_Enemy()
 {
@@ -16,6 +21,9 @@ AC_Enemy::AC_Enemy()
 	WidgetComponent->SetDrawSize(FVector2D(100.f, 10.f));
 	WidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
 	WidgetComponent->SetRelativeLocation(FVector(0.f, 0.f, 85.f));
+
+	Timeline = CreateDefaultSubobject<UTimelineComponent>(TEXT("Timeline"));
+
 }
 
 void AC_Enemy::BeginPlay()
@@ -25,6 +33,13 @@ void AC_Enemy::BeginPlay()
 	Health = MaxHealth;
 	Cast<UC_EnemyWidget>(WidgetComponent->GetWidget())->UpdateHealth(MaxHealth, Health);
 
+	MaterialDynamic = GetMesh()->CreateDynamicMaterialInstance(0, GetMesh()->GetMaterial(0));
+	GetMesh()->SetMaterial(0, MaterialDynamic);
+
+	//FOnTimelineFloat timeline;
+	//timeline.BindUFunction(this, "OnHitColor");
+	//Timeline->AddInterpFloat(HitCurve, timeline);
+	//Timeline->SetLooping(false);
 }
 
 void AC_Enemy::Tick(float DeltaTime)
@@ -47,10 +62,12 @@ float AC_Enemy::TakeDamage(float damage, FDamageEvent const& event, AController*
 
 	if (Health <= 0.f)
 	{
-		// Die;
 	}
 
 	Cast<UC_EnemyWidget>(WidgetComponent->GetWidget())->UpdateHealth(MaxHealth, Health);
+
+	Timeline->PlayFromStart();
+
 
 	return applydamage;
 }
@@ -72,5 +89,11 @@ void AC_Enemy::Fire(AActor* target)
 			spawnParam
 		);
 	}
+}
+
+void AC_Enemy::OnHitColor(float output)
+{
+	FLinearColor color = UKismetMathLibrary::LinearColorLerp(OriginColor, HitColor, output);
+	MaterialDynamic->SetVectorParameterValue("FloorColor", color);
 }
 

@@ -10,6 +10,8 @@
 #include "GameFramework/PlayerController.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Shakes/LegacyCameraShake.h"
+#include "Actors/Items/PickupItems/Weapons/C_Casing.h"
+#include "Engine/SkeletalMeshSocket.h"
 
 AC_Weapon::AC_Weapon()
 {
@@ -101,6 +103,21 @@ void AC_Weapon::Fire(const FVector& hitTaghet)
 
 		Mesh->PlayAnimation(WeaponFireAnimation, false);
 
+		if (CasingClass)
+		{
+			const USkeletalMeshSocket* EjectSocket = Mesh->GetSocketByName(FName("ShellEject"));
+
+			if (EjectSocket != nullptr)
+			{
+				FTransform transform = EjectSocket->GetSocketTransform(Mesh);
+				GetWorld()->SpawnActor<AC_Casing>
+					(
+						CasingClass,
+						transform.GetLocation(),
+						transform.GetRotation().Rotator()
+					);
+			}
+		}
 
 		if (AC_Player* player = Cast<AC_Player>(GetOwner()))
 		{

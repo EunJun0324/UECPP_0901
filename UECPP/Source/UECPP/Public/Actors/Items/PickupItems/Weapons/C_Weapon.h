@@ -6,11 +6,6 @@
 #include "Actors/Items/PickupItems/C_PickupItem.h"
 #include "C_Weapon.generated.h"
 
-// Shotgun 을 만들어주세요.
-// Shotgun 은 발파시에 산탄처럼 퍼져나가야합니다.
-
-// Rifle 은 따로 클래스를 설정해주세요.
-
 USTRUCT(BlueprintType)
 struct FWeaponAimData
 {
@@ -85,6 +80,9 @@ protected :
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class AC_Projectile> ProjectileClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class AC_Casing> CasingClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "WeaponData", meta = (AllowPrivateAccess = "true"))
 	int32 MagazineCapacity;

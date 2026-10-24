@@ -21,6 +21,10 @@ protected:
 public:
 	void Fire(AActor* target);
 
+private :
+	UFUNCTION()
+	void OnHitColor(float output);
+
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Projectile", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class AC_Projectile> ProjectileClass;
@@ -34,6 +38,22 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
 	float MaxHealth;
 
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<class UTimelineComponent> Timeline;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Hit", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UCurveFloat> HitCurve;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Hit", meta = (AllowPrivateAccess = "true"))
+	struct FLinearColor HitColor;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Hit", meta = (AllowPrivateAccess = "true"))
+	struct FLinearColor OriginColor;
+
+
 private:
 	float Health;
+	class UMaterialInstanceDynamic* MaterialDynamic;
+
 };
