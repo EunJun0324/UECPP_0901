@@ -46,6 +46,9 @@ protected :
 	UPROPERTY(BlueprintReadOnly, Category = "AimOffset", meta = (AllowPrivateAccess = "true"))
 	float AO_Pitch;
 
+	UPROPERTY(BlueprintReadOnly, Category = "HandIK")
+	FTransform LeftHandIKTransform;
+
 private :
 	class UC_CombatComponent* Combat;
 

@@ -25,6 +25,8 @@ AC_Player::AC_Player()
     GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f);
 
     CombatComponent = CreateDefaultSubobject<UC_CombatComponent>(TEXT("CombatComponent"));
+
+    
 }
 
 void AC_Player::BeginPlay()
@@ -36,6 +38,7 @@ void AC_Player::BeginPlay()
         if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
             ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()))
         {
+
             if (MappingContext)
             {
                 Subsystem->AddMappingContext(MappingContext, 0);

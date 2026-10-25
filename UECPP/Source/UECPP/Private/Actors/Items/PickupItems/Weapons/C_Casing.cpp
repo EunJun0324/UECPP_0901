@@ -1,4 +1,4 @@
-#include "Actors/Items/PickupItems/Weapons/C_Casing.h"
+﻿#include "Actors/Items/PickupItems/Weapons/C_Casing.h"
 
 AC_Casing::AC_Casing()
 {
@@ -14,7 +14,7 @@ AC_Casing::AC_Casing()
 	CasingMesh->SetSimulatePhysics(true);
 	CasingMesh->SetEnableGravity(true);
 	CasingMesh->SetNotifyRigidBodyCollision(true);
-
+	CasingMesh->SetMassOverrideInKg(NAME_None, 1.0f, true);
 
 }
 
@@ -23,7 +23,7 @@ void AC_Casing::BeginPlay()
 	Super::BeginPlay();
 	
 	SetLifeSpan(5.0f);
-	CasingMesh->AddImpulse(GetActorForwardVector() * 5);
+	CasingMesh->AddImpulse(GetActorRightVector() * 100, NAME_None, true);
 }
 
 

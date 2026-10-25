@@ -3,6 +3,7 @@
 #include "GameFramework/Character.h"
 #include "Components/C_CombatComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Actors/Items/PickupItems/Weapons/C_Weapon.h"
 
 void UC_AnimInstance::NativeInitializeAnimation()
 {
@@ -64,5 +65,25 @@ void UC_AnimInstance::NativeUpdateAnimation(float deltaSeconds)
 				AO_Pitch = OwningCharacter->GetBaseAimRotation().Pitch;
 			}
 		}
+	}
+
+	{
+		USkeletalMeshComponent* mesh = OwningCharacter->GetMesh();
+
+		if (mesh == nullptr) return;
+
+		AC_Weapon* weapon = Combat->GetEquippedWeapon();
+
+		if (weapon == nullptr) return; // (!weapon)
+
+		const FTransform socketWorld = weapon->GetSkeltalMesh()->GetSocketTransform(TEXT("LeftHandSocket"));
+
+		FVector  outPos;
+		FRotator outRot;
+
+		mesh->TransformToBoneSpace(TEXT("hand_r"), socketWorld.GetLocation(), socketWorld.Rotator(), outPos, outRot);
+
+		LeftHandIKTransform.SetLocation(outPos);
+		LeftHandIKTransform.SetRotation(outRot.Quaternion());
 	}
 }

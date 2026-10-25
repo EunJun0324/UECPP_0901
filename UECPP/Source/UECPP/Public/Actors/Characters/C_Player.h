@@ -81,6 +81,8 @@ protected :
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UInputAction> ReloadAction;
 
+    
+
 private :
     class AC_PickupItem* NearPickItem;
     float Health;

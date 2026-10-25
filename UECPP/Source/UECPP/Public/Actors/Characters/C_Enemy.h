@@ -35,6 +35,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UWidgetComponent> WidgetComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UC_EnemyWidget> EnemyWidgetClass;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
 	float MaxHealth;
 
@@ -55,5 +58,5 @@ private:
 private:
 	float Health;
 	class UMaterialInstanceDynamic* MaterialDynamic;
-
+	class UC_EnemyWidget* Widget;
 };

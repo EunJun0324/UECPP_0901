@@ -65,4 +65,6 @@ public :
 	EWeaponType GetWeaponType() const;
 
 	UC_CharacterOverlayWidget* GetCharacterOverlay() { return CharacterOverlay; }
+
+	AC_Weapon* GetEquippedWeapon() const { return EquippedWeapon; }
 };

@@ -24,6 +24,8 @@ AC_Enemy::AC_Enemy()
 
 	Timeline = CreateDefaultSubobject<UTimelineComponent>(TEXT("Timeline"));
 
+
+
 }
 
 void AC_Enemy::BeginPlay()
@@ -31,15 +33,25 @@ void AC_Enemy::BeginPlay()
 	Super::BeginPlay();
 
 	Health = MaxHealth;
-	Cast<UC_EnemyWidget>(WidgetComponent->GetWidget())->UpdateHealth(MaxHealth, Health);
+	
+	WidgetComponent->SetWidgetClass(EnemyWidgetClass);
+
+	Widget = Cast<UC_EnemyWidget>(WidgetComponent->GetWidget());
+	
+	if (Widget != nullptr)
+	{
+		Widget->UpdateHealth(MaxHealth, Health);
+	}
 
 	MaterialDynamic = GetMesh()->CreateDynamicMaterialInstance(0, GetMesh()->GetMaterial(0));
-	GetMesh()->SetMaterial(0, MaterialDynamic);
 
-	//FOnTimelineFloat timeline;
-	//timeline.BindUFunction(this, "OnHitColor");
-	//Timeline->AddInterpFloat(HitCurve, timeline);
-	//Timeline->SetLooping(false);
+	GetMesh()->SetMaterial(0, MaterialDynamic);
+	
+	
+	FOnTimelineFloat timeline;
+	timeline.BindUFunction(this, "OnHitColor");
+	Timeline->AddInterpFloat(HitCurve, timeline);
+	Timeline->SetLooping(false);
 }
 
 void AC_Enemy::Tick(float DeltaTime)
@@ -64,7 +76,10 @@ float AC_Enemy::TakeDamage(float damage, FDamageEvent const& event, AController*
 	{
 	}
 
-	Cast<UC_EnemyWidget>(WidgetComponent->GetWidget())->UpdateHealth(MaxHealth, Health);
+	if (Widget != nullptr)
+	{
+		Widget->UpdateHealth(MaxHealth, Health);
+	}
 
 	Timeline->PlayFromStart();
 
