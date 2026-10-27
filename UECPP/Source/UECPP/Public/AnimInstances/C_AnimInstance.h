@@ -49,6 +49,9 @@ protected :
 	UPROPERTY(BlueprintReadOnly, Category = "HandIK")
 	FTransform LeftHandIKTransform;
 
+	UPROPERTY(BlueprintReadOnly, Category = "HandIK")
+	float LeftHandIKAlpha;
+
 private :
 	class UC_CombatComponent* Combat;
 

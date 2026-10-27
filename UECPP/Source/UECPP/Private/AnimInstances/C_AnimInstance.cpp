@@ -68,6 +68,9 @@ void UC_AnimInstance::NativeUpdateAnimation(float deltaSeconds)
 	}
 
 	{
+		const float targetAlpha = bIsFalling ? 0.f : 1.f;
+		LeftHandIKAlpha = FMath::FInterpTo(LeftHandIKAlpha, targetAlpha, deltaSeconds, 10.f);
+
 		USkeletalMeshComponent* mesh = OwningCharacter->GetMesh();
 
 		if (mesh == nullptr) return;
@@ -81,6 +84,7 @@ void UC_AnimInstance::NativeUpdateAnimation(float deltaSeconds)
 		FVector  outPos;
 		FRotator outRot;
 
+		// 월드 공간의 트랜스폼을 특정 본의 로컬 공간으로 변환
 		mesh->TransformToBoneSpace(TEXT("hand_r"), socketWorld.GetLocation(), socketWorld.Rotator(), outPos, outRot);
 
 		LeftHandIKTransform.SetLocation(outPos);

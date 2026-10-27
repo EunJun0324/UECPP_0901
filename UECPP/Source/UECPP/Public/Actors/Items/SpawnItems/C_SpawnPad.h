@@ -16,8 +16,6 @@ UCLASS()
 class UECPP_API AC_SpawnPad : public AActor
 {
 	GENERATED_BODY()
-	
-
 
 public:	
 	AC_SpawnPad();
@@ -28,12 +26,19 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 
+public :
+	void StartSpawnTimer();
+
+private :
+	UFUNCTION()
+	void SpawnTimerFunction();
+
 private :
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UStaticMeshComponent> Mesh;
 
 	UPROPERTY(EditDefaultsOnly)
-	TObjectPtr<class UNiagaraComponent> NiagaraSystemComponent;
+	TObjectPtr<class UNiagaraComponent> NiagaraComponent;
 
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<class UNiagaraSystem> CreatingParticle;
@@ -41,4 +46,12 @@ private :
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<class UNiagaraSystem> CreatedParticle;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class AC_SpawnItem> SpawnItemClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	float ZOffset;
+
+private :
+	struct FTimerHandle SpawnTimer;
 };

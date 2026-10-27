@@ -5,9 +5,8 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Materials/MaterialInstanceConstant.h"
 #include "Kismet/GameplayStatics.h"
-#include "NiagaraFunctionLibrary.h"
-#include "Components/DecalComponent.h"
 #include "GameFramework/Character.h"
+#include "NiagaraFunctionLibrary.h"
 #include "NiagaraSystem.h"
 
 AC_Projectile::AC_Projectile()
