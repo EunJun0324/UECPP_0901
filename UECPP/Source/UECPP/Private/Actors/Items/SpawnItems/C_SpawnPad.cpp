@@ -29,7 +29,7 @@ void AC_SpawnPad::Tick(float DeltaTime)
 
 void AC_SpawnPad::StartSpawnTimer()
 {
-	GetOwner()->GetWorldTimerManager().SetTimer
+	GetWorldTimerManager().SetTimer
 	(
 		SpawnTimer,
 		this,
