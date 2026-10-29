@@ -39,8 +39,5 @@ protected :
 	float RotateSpeed;
 
 	UPROPERTY(EditDefaultsOnly)
-	EBuffType Type;
-
-	UPROPERTY(EditDefaultsOnly)
-	float Value;
+	FBuff BuffInfo;
 };

@@ -27,3 +27,22 @@ enum class EBuffType : uint8
 	BT_SPEED,
 	BT_JUMP,
 };
+
+
+USTRUCT(BlueprintType)
+struct FBuff
+{
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadOnly)
+	EBuffType Type;
+
+	UPROPERTY(BlueprintReadOnly)
+	float Value = 0.f;
+
+	UPROPERTY(BlueprintReadOnly)
+	float Duration = 0.f;
+
+	UPROPERTY(BlueprintReadOnly)
+	float Remaining = 0.f;
+};

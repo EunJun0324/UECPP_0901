@@ -21,10 +21,19 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public :
-	void Buff(EBuffType buffType, float value);
+	void Buff(FBuff buff);
+	void DeactiveBuff(FBuff buff);
 
 private :
-	void HealingBuff(float value);
-	void SpeedBuff(float value);
-	void JumpBuff(float value);
+	void HealingBuff(FBuff buff);
+	void SpeedBuff(FBuff buff, bool activated);
+	void JumpBuff(FBuff buff, bool activated);
+
+private :
+	TArray<FBuff> ActiveBuffs;
+	class AC_Player* Player;
+
+private :
+	float BaseSpeed;
+	float BaseJumpForce;
 };

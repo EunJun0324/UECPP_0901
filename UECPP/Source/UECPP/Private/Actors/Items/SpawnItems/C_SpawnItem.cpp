@@ -36,7 +36,7 @@ void AC_SpawnItem::OnCollsionBeginOverlap(UPrimitiveComponent* OverlappedCompone
 
 	if (player == nullptr) return;
 
-	player->GetBuffComponent()->Buff(Type, Value);
+	player->GetBuffComponent()->Buff(BuffInfo);
 	
 	UNiagaraFunctionLibrary::SpawnSystemAttached(Particle, OtherComp, FName(), FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::SnapToTarget, true);
 
