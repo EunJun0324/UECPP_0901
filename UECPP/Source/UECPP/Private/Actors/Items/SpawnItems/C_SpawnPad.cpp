@@ -34,7 +34,7 @@ void AC_SpawnPad::StartSpawnTimer()
 		SpawnTimer,
 		this,
 		&ThisClass::SpawnTimerFunction,
-		5.f,
+		SpawnTime,
 		false
 	);
 

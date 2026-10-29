@@ -5,6 +5,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Components/C_CombatComponent.h"
+#include "Components/C_BuffComponent.h"
 #include "Widgets/C_CharacterOverlayWidget.h"
 
 AC_Player::AC_Player()
@@ -25,8 +26,7 @@ AC_Player::AC_Player()
     GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f);
 
     CombatComponent = CreateDefaultSubobject<UC_CombatComponent>(TEXT("CombatComponent"));
-
-    
+    BuffComponent   = CreateDefaultSubobject<UC_BuffComponent>(TEXT("BuffComponent"));
 }
 
 void AC_Player::BeginPlay()

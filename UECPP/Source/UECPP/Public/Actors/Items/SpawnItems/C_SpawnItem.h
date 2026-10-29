@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Types/C_Type.h"
 #include "C_SpawnItem.generated.h"
 
 UCLASS()
@@ -34,6 +35,12 @@ protected :
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<class UNiagaraSystem> Particle;
 
-private :
-	class AC_SpawnPad* OwnerPad;
+	UPROPERTY(EditDefaultsOnly)
+	float RotateSpeed;
+
+	UPROPERTY(EditDefaultsOnly)
+	EBuffType Type;
+
+	UPROPERTY(EditDefaultsOnly)
+	float Value;
 };

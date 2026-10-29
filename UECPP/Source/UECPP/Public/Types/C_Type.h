@@ -18,3 +18,12 @@ enum class EItemType : uint8
 	IT_WEAPON,
 	IT_BULLET,
 };
+
+
+UENUM(BlueprintType)
+enum class EBuffType : uint8
+{
+	BT_HEALING,
+	BT_SPEED,
+	BT_JUMP,
+};

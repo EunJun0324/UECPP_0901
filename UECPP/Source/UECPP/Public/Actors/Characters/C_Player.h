@@ -45,6 +45,8 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UC_CombatComponent> CombatComponent;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Buff", meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<class UC_BuffComponent> BuffComponent;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
     float MaxHealth;
@@ -77,7 +79,6 @@ protected :
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UInputAction> AutomaticAction;
 
-
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<class UInputAction> ReloadAction;
 
@@ -92,7 +93,7 @@ public:
 
 
     FORCEINLINE USpringArmComponent* GetSpringArm()          const { return          SpringArm; }
-    FORCEINLINE UCameraComponent*    GetCamera()             const { return             Camera; }
-    FORCEINLINE UC_CombatComponent*  GetCombatComponent()    const { return    CombatComponent; }
-
+    FORCEINLINE UCameraComponent   * GetCamera()             const { return             Camera; }
+    FORCEINLINE UC_CombatComponent * GetCombatComponent()    const { return    CombatComponent; }
+    FORCEINLINE UC_BuffComponent   * GetBuffComponent()      const { return      BuffComponent; }
 };

@@ -52,6 +52,9 @@ private :
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float ZOffset;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	float SpawnTime = 10.f;
+
 private :
 	struct FTimerHandle SpawnTimer;
 };
